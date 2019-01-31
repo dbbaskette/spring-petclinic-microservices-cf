@@ -1,0 +1,29 @@
+---
+defaults: &defaults
+  memory: 1G
+  instances: 1
+  stack: cflinuxfs3
+  services:
+    - config-server
+    - service-registry
+
+applications:
+- name: api-server
+  path: ./spring-petclinic-api-gateway/target/spring-petclinic-api-gateway-2.0.6.jar
+  <<: *defaults
+
+- name: admin-server
+  path: ./spring-petclinic-admin-server/target/spring-petclinic-admin-server-2.0.6.jar
+  <<: *defaults
+
+- name: customer-service
+  path: ./spring-petclinic-customers-service/target/spring-petclinic-customers-service-2.0.6.jar
+  <<: *defaults
+
+- name: vets-service
+  path: ./spring-petclinic-vets-service/target/spring-petclinic-vets-service-2.0.6.jar
+  <<: *defaults
+
+- name: visits-service
+  path: ./spring-petclinic-visits-service/target/spring-petclinic-visits-service-2.0.6.jar
+  <<: *defaults
