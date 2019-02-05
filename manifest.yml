@@ -17,6 +17,7 @@ applications:
   services:
     - config-server
     - service-registry
+    - petclinic-db
   <<: *defaults
 
 - name: vets-service
@@ -24,6 +25,7 @@ applications:
   services:
     - config-server
     - service-registry
+    - petclinic-db
   <<: *defaults
 
 - name: visits-service
@@ -31,9 +33,10 @@ applications:
   services:
     - config-server
     - service-registry
+    - petclinic-db
   <<: *defaults
 
-- name: api-server
+- name: petclinic
   path: ./spring-petclinic-api-gateway/target/spring-petclinic-api-gateway-2.0.6.jar
   services:
     - config-server
