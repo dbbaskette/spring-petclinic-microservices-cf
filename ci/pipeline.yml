@@ -1,0 +1,15 @@
+resources:
+    - name: spring-petclinic-microservices
+      type: git
+      source:
+        uri: https://github.com/BrianMMcClain/spring-petclinic-microservices.git
+        branch: master
+
+
+jobs:
+    - name: unit-test
+      plan:
+      - get: spring-petclinic-microservices
+        trigger: true
+      - task: unit
+        file: spring-petclinic-microservices/ci/tasks/unit.yml
