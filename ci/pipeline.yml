@@ -4,6 +4,16 @@ resources:
       source:
         uri: https://github.com/BrianMMcClain/spring-petclinic-microservices.git
         branch: master
+    
+    - name: cf-dev
+      type: cf
+      source:
+        api: {{cf-api}}
+        username: {{cf-username}}
+        password: {{cf-password}}
+        organization: {{cf-org}}
+        space: {{cf-space}}
+        skip_cert_check: true
 
 
 jobs:
@@ -13,3 +23,37 @@ jobs:
         trigger: true
       - task: unit
         file: spring-petclinic-microservices/ci/tasks/unit.yml
+
+    - name: build-and-push
+      plan:
+      - get: spring-petclinic-microservices
+        passed: [unit-test]
+        trigger: true
+      
+      - task: build
+        file: spring-petclinic-microservices/ci/tasks/build.yml
+
+      - put: cf-dev
+        params:
+          manifest: ./spring-petclinic-microservices/ci/admin-server-manifest.yml
+          path: artifacts/spring-petclinic-admin-server-2.0.6.jar
+      
+      - put: cf-dev
+        params:
+          manifest: ./spring-petclinic-microservices/ci/customer-service-manifest.yml
+          path: artifacts/spring-petclinic-customers-service-2.0.6.jar
+
+      - put: cf-dev
+        params:
+          manifest: ./spring-petclinic-microservices/ci/vets-service-manifest.yml
+          path: artifacts/spring-petclinic-vets-service-2.0.6.jar
+      
+      - put: cf-dev
+        params:
+          manifest: ./spring-petclinic-microservices/ci/visits-service-manifest.yml
+          path: artifacts/spring-petclinic-visits-service-2.0.6.jar
+      
+      - put: cf-dev
+        params:
+          manifest: ./spring-petclinic-microservices/ci/petclinic-manifest.yml
+          path: artifacts/spring-petclinic-api-gateway-2.0.6.jar

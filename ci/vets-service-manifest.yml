@@ -1,0 +1,9 @@
+applications:
+- name: vets-service
+  memory: 2G
+  instances: 1
+  stack: cflinuxfs3
+  services:
+    - config-server
+    - service-registry
+    - petclinic-db

@@ -10,8 +10,11 @@ image_resource:
 inputs:
 - name: spring-petclinic-microservices
 
+outputs:
+- name: artifacts
+
 caches:
 - path: maven
 
 run:
-    path: spring-petclinic-microservices/ci/tasks/unit.sh
+    path: spring-petclinic-microservices/ci/tasks/build.sh

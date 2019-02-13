@@ -1,0 +1,8 @@
+applications:
+- name: admin-server
+  memory: 2G
+  instances: 1
+  stack: cflinuxfs3
+  services:
+    - config-server
+    - service-registry
